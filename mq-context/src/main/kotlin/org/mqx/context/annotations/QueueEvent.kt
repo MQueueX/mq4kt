@@ -1,4 +1,4 @@
-package com.mqx.mq4kt.core.annotations
+package org.mqx.context.annotations
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
