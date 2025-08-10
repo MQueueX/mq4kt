@@ -1,7 +1,7 @@
-package org.mqx.context.config
+package org.mqx.autoconfigure.config
 
+import org.mqx.autoconfigure.properties.MqxRedisProperties
 import org.mqx.context.listener.MqxApplicationStartupListener
-import org.mqx.context.properties.MqxRedisProperties
 import org.redisson.Redisson
 import org.redisson.api.RedissonClient
 import org.redisson.codec.TypedJsonJacksonCodec

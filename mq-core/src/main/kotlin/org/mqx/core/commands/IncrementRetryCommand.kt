@@ -1,4 +1,4 @@
-package com.mqx.mq4kt.commands
+package org.mqx.core.commands
 
 import org.redisson.api.RedissonClient
 

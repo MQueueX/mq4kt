@@ -1,4 +1,4 @@
-package org.mqx.context.properties
+package org.mqx.autoconfigure.properties
 
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties
 import org.springframework.boot.context.properties.ConfigurationProperties

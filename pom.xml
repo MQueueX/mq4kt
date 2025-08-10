@@ -10,6 +10,7 @@
         <module>mq-core</module>
         <module>mq-error</module>
         <module>mq-util</module>
+        <module>mq-autoconfigure</module>
     </modules>
     <groupId>org.mqx</groupId>
     <version>1.0-SNAPSHOT</version>
