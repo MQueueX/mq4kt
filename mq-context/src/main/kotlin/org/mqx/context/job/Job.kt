@@ -1,9 +1,13 @@
-package org.mqx.context.impl
+package org.mqx.context.job
 
-interface Job<D, R> {
+interface Job<D, R, E : Throwable> {
     fun getId(): String
 
-    fun getPayload(): D
+    fun getData(): D
+
+    fun getResult(): R?
+
+    fun getError(): E?
 
     fun getPriority(): Int
 
@@ -18,4 +22,6 @@ interface Job<D, R> {
     fun isExpired(): Boolean
 
     fun isRetrying(): Boolean
+
+    fun getOptions(): JobOptions
 }

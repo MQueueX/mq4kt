@@ -2,8 +2,8 @@ package org.mqx.context.ctx
 
 import org.mqx.context.annotations.QueueEvent
 import org.mqx.context.annotations.Worker
-import org.mqx.context.impl.EventConsumer
-import org.mqx.context.impl.QueueEventListener
+import org.mqx.context.consumer.EventConsumer
+import org.mqx.context.queue.QueueEventListener
 import org.mqx.error.MQueueEventListenerClassNotValidException
 import org.mqx.error.WorkerClassNotValidException
 import org.springframework.context.ApplicationContext
@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap
 object MqxContext {
     private var initialized = false
     private val workers = ConcurrentHashMap<String, EventConsumer<*, *, *>>()
-    private val queueListeners = ConcurrentHashMap<String, QueueEventListener<*, *>>()
+    private val queueListeners = ConcurrentHashMap<String, QueueEventListener<*, *, *>>()
 
     private lateinit var applicationContext: ApplicationContext
 
@@ -50,11 +50,11 @@ object MqxContext {
         val queueEventListenerBeans = ctx.getBeansWithAnnotation(QueueEvent::class.java)
 
         queueEventListenerBeans.entries.forEach { queueEventListener ->
-            if (queueEventListener.value !is QueueEventListener<*, *>) {
+            if (queueEventListener.value !is QueueEventListener<*, *, *>) {
                 throw MQueueEventListenerClassNotValidException("MQueue event listeners class with name: ${queueEventListener.key} has to implements QueueEventListener class of the library")
             }
 
-            val listenerClz = queueEventListener.value as QueueEventListener<*, *>
+            val listenerClz = queueEventListener.value as QueueEventListener<*, *, *>
             val queueListenerEventAnnotation =
                 ctx.findAnnotationOnBean(queueEventListener.key, QueueEvent::class.java) ?: return@forEach
 
@@ -63,13 +63,5 @@ object MqxContext {
             }
             queueListeners[queueListenerEventAnnotation.queueName] = listenerClz
         }
-    }
-
-    fun getWorker(queueName: String): EventConsumer<*, *, *>? {
-        return workers[queueName]
-    }
-
-    fun getQueueEventListener(queueName: String): QueueEventListener<*, *>? {
-        return queueListeners[queueName]
     }
 }
